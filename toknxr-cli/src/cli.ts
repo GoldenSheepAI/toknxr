@@ -127,7 +127,6 @@ program
   .description('Welcome to TokNXR - your AI development companion')
   .action(async () => {
     const {
-      GOLDEN_SHEEP_LOGO,
       TOKNXR_LOGO,
       WELCOME_MESSAGE,
       createSystemStatus,
@@ -140,9 +139,7 @@ program
 
     console.clear();
     
-    // Display both logos with animation effect
-    console.log(GOLDEN_SHEEP_LOGO);
-    console.log();
+    // Display TokNXR logo
     console.log(TOKNXR_LOGO);
     console.log(WELCOME_MESSAGE());
     
@@ -197,15 +194,12 @@ program
   .description('Display TokNXR and Golden Sheep AI branding')
   .action(async () => {
     const {
-      GOLDEN_SHEEP_LOGO,
       TOKNXR_LOGO,
       createVersionInfo,
       COLORS
     } = await import('./branding.js');
 
     console.clear();
-    console.log(GOLDEN_SHEEP_LOGO);
-    console.log();
     console.log(TOKNXR_LOGO);
     console.log();
     console.log(COLORS.accent('AI Effectiveness & Code Quality Analysis'));
@@ -221,7 +215,7 @@ program
     try {
       // Import branding components
       const {
-        TOKNXR_CUSTOM_LOGO,
+        TOKNXR_LOGO,
         createSystemStatus,
         createQuickStats,
         getRandomTip,
@@ -234,7 +228,7 @@ program
       console.clear();
 
       // Single, clean logo display
-      console.log(TOKNXR_CUSTOM_LOGO);
+      console.log(TOKNXR_LOGO);
       console.log();
 
       // Check system status
@@ -396,7 +390,7 @@ program
   .action(async () => {
       // Import branding for enhanced startup experience
       const {
-        TOKNXR_CUSTOM_LOGO,
+        TOKNXR_LOGO,
         createSuccessBox,
         createErrorBox,
         COLORS,
@@ -404,7 +398,7 @@ program
       } = await import('./branding.js');
 
     console.clear();
-    console.log(TOKNXR_CUSTOM_LOGO);
+    console.log(TOKNXR_LOGO);
     console.log(COLORS.muted(getContextualDecoration()));
     console.log();
 
@@ -929,7 +923,7 @@ program
   .action(async () => {
     // Import branding for enhanced init experience
     const {
-      TOKNXR_CUSTOM_LOGO,
+      TOKNXR_LOGO,
       createSuccessBox,
       createErrorBox,
       COLORS,
@@ -937,7 +931,7 @@ program
     } = await import('./branding.js');
 
     console.clear();
-    console.log(TOKNXR_CUSTOM_LOGO);
+    console.log(TOKNXR_LOGO);
     console.log(COLORS.accent('🎯 TokNXR Initialization Wizard'));
     console.log(COLORS.muted('Setting up your AI analytics environment...'));
     console.log();
@@ -2778,7 +2772,7 @@ program
   .action(async (options) => {
     // Import branding for enhanced experience
     const {
-      TOKNXR_COMPACT_LOGO,
+      TOKNXR_LOGO,
       COLORS,
       createVersionInfo
     } = await import('./branding.js');
@@ -2833,7 +2827,7 @@ program
     } else {
       // Default interactive mode
       console.clear();
-      console.log(TOKNXR_COMPACT_LOGO);
+      console.log(TOKNXR_LOGO);
       console.log(COLORS.accent('💬 TokNXR Feedback Center'));
       console.log(COLORS.muted('Help us improve your AI development experience!'));
       console.log();
@@ -2899,7 +2893,7 @@ program
   .action(async () => {
     // Import branding for enhanced doctor experience
     const {
-      TOKNXR_CUSTOM_LOGO,
+      TOKNXR_LOGO,
       createSuccessBox,
       createErrorBox,
       COLORS,
@@ -2907,7 +2901,7 @@ program
     } = await import('./branding.js');
 
     console.clear();
-    console.log(TOKNXR_CUSTOM_LOGO);
+    console.log(TOKNXR_LOGO);
     console.log(COLORS.accent('🏥 TokNXR System Doctor'));
     console.log(COLORS.muted('Diagnosing your AI analytics environment...'));
     console.log();

@@ -5,26 +5,6 @@ import chalk from 'chalk';
  * Contains all the visual elements that make the CLI experience more engaging
  */
 
-// Golden Sheep AI Logo - ASCII Art
-export const GOLDEN_SHEEP_LOGO = `
-${chalk.yellow.bold('*******************************************************************')}
-${chalk.yellow.bold('*                                                                 *')}
-${chalk.yellow.bold('*                                                                 *')}
-${chalk.yellow.bold('*  :::=====  :::====  :::      :::====  :::===== :::= ===         *')}
-${chalk.yellow.bold('*  :::       :::  === :::      :::  === :::      :::=====         *')}
-${chalk.yellow.bold('*  === ===== ===  === ===      ===  === ======   ========         *')}
-${chalk.yellow.bold('*  ===   === ===  === ===      ===  === ===      === ====         *')}
-${chalk.yellow.bold('*   =======   ======  ======== =======  ======== ===  ===         *')}
-${chalk.yellow.bold('*                                                                 *')}
-${chalk.yellow.bold('*  :::===  :::  === :::===== :::===== :::====       :::====  :::  *')}
-${chalk.yellow.bold('*  :::     :::  === :::      :::      :::  ===      :::  === :::  *')}
-${chalk.yellow.bold('*   =====  ======== ======   ======   =======       ======== ===  *')}
-${chalk.yellow.bold('*      === ===  === ===      ===      ===           ===  === ===  *')}
-${chalk.yellow.bold('*  ======  ===  === ======== ======== ===           ===  === ===  *')}
-${chalk.yellow.bold('*                                                                 *')}
-${chalk.yellow.bold('*                                                                 *')}
-${chalk.yellow.bold('*******************************************************************')}
-`;
 
 // TokNXR Brand Logo
 export const TOKNXR_LOGO = `
@@ -38,42 +18,7 @@ ${chalk.cyan.bold('   ╚═╝    ╚═════╝ ╚═╝  ╚═╝╚
 ${chalk.gray('           AI Effectiveness & Code Quality Analysis')}
 `;
 
-// TokNXR Compact Logo for constrained spaces
-export const TOKNXR_COMPACT_LOGO = `
-${chalk.cyan.bold('████████╗ ██████╗ ██╗  ██╗███╗   ██╗██╗  ██╗██████╗ ')}
-${chalk.cyan.bold('╚══██╔══╝██╔═══██╗██║ ██╔╝████╗  ██║╚██╗██╔╝██╔══██╗')}
-${chalk.cyan.bold('   ██║   ██║   ██║█████╔╝ ██╔██╗ ██║ ╚███╔╝ ██████╔╝')}
-${chalk.cyan.bold('   ██║   ██║   ██║██╔═██╗ ██║╚██╗██║ ██╔██╗ ██╔══██╗')}
-${chalk.cyan.bold('   ██║   ╚██████╔╝██║  ██╗██║ ╚████║██╔╝ ██╗██║  ██║')}
-${chalk.cyan.bold('   ╚═╝    ╚═════╝ ╚═╝  ╚═╝╚═╝  ╚═══╝╚═╝  ╚═╝╚═╝  ╚═╝')}
-`;
 
-// Custom TokNXR logo with 00000 pattern
-export const TOKNXR_CUSTOM_LOGO = `
-${chalk.cyan.bold('                                                                                                   ')}
-${chalk.cyan.bold('                                                                                                                  ')}
-${chalk.cyan.bold('                                                                                                                  ')}
-${chalk.cyan.bold('                                                                                                                  ')}
-${chalk.cyan.bold('                                                             00000                                                ')}
-${chalk.cyan.bold('                                                            00000000                                              ')}
-${chalk.cyan.bold('                                                           000000000                                              ')}
-${chalk.cyan.bold('                                                           000000000                                              ')}
-${chalk.cyan.bold('                    00000000000              00000  000000 000000000 000000  00000 0000000                       ')}
-${chalk.cyan.bold('                    00000000000              00000 000000             00000  00000 0000000000                    ')}
-${chalk.cyan.bold('                    00000000000              00000 00000               0000000000  00000000000                   ')}
-${chalk.cyan.bold('                      000000     0000000000  0000000000   0000000000    00000000   00000 00000                   ')}
-${chalk.cyan.bold('                      000000    000000000000 0000000000   00000000000   00000000   00000000000                   ')}
-${chalk.cyan.bold('                      000000   00000000000000000000000    00000000000   0000000    0000000000                    ')}
-${chalk.cyan.bold('                      000000   000000  0000000000000000   00000 00000   00000000   0000000000                    ')}
-${chalk.cyan.bold('                      000000   0000000000000 00000 00000  00000 00000  0000000000  00000000000                   ')}
-${chalk.cyan.bold('                      000000    00000000000  00000 000000 00000 00000 000000000000 00000 00000                   ')}
-${chalk.cyan.bold('                      000000      0000000    00000  00000000000 00000 00000  00000 00000  00000                  ')}
-${chalk.cyan.bold('                                                                                                                  ')}
-${chalk.cyan.bold('                                                                                                                  ')}
-${chalk.cyan.bold('                                                           000000000                                              ')}
-${chalk.cyan.bold('                                                           000000000                                              ')}
-${chalk.cyan.bold('                                                             00000                                               ')}
-`;
 
 // Welcome message from Golden Sheep AI
 export const WELCOME_MESSAGE = () => {
