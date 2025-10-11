@@ -221,13 +221,10 @@ program
     try {
       // Import branding components
       const {
-        TOKNXR_LOGO,
-        TOKNXR_COMPACT_LOGO,
-        WELCOME_MESSAGE,
+        TOKNXR_CUSTOM_LOGO,
         createSystemStatus,
         createQuickStats,
         getRandomTip,
-        getContextualDecoration,
         createVersionInfo,
         MENU_SECTIONS,
         COLORS
@@ -236,21 +233,14 @@ program
       // Clear screen for clean presentation
       console.clear();
 
-      // Detect terminal width to choose appropriate logo
-      const terminalWidth = process.stdout.columns || 80;
-      const logo = terminalWidth >= 100 ? TOKNXR_LOGO : TOKNXR_COMPACT_LOGO;
-
-      console.log(logo);
-      console.log(WELCOME_MESSAGE());
-
-      // Display contextual decoration
-      console.log(COLORS.muted(getContextualDecoration()));
+      // Single, clean logo display
+      console.log(TOKNXR_CUSTOM_LOGO);
       console.log();
 
       // Check system status
       const configExists = fs.existsSync(path.resolve(process.cwd(), 'toknxr.config.json'));
       const logExists = fs.existsSync(path.resolve(process.cwd(), 'interactions.log'));
-      
+
       // Check if proxy is running
       let proxyRunning = false;
       try {
@@ -281,11 +271,11 @@ program
 
           totalCost = interactions.reduce((sum, i) => sum + (i.costUSD || 0), 0);
           totalRequests = interactions.length;
-          
+
           const qualityScores = interactions
             .map(i => i.codeQualityScore)
             .filter(score => score !== undefined);
-          avgQuality = qualityScores.length > 0 
+          avgQuality = qualityScores.length > 0
             ? Math.round(qualityScores.reduce((sum, score) => sum + score, 0) / qualityScores.length)
             : 0;
         } catch {
@@ -293,124 +283,46 @@ program
         }
       }
 
-      // Display system status and stats
+      // Display system status and stats in a cleaner format
       console.log(createSystemStatus(proxyRunning, configExists, logExists));
       console.log();
-      
+
       if (logExists && totalRequests > 0) {
         console.log(createQuickStats(totalCost, totalRequests, avgQuality));
         console.log();
       }
 
-      // Enhanced menu with organized sections
-      console.log(MENU_SECTIONS.CORE_OPERATIONS.title);
-      console.log(MENU_SECTIONS.CORE_OPERATIONS.description);
-      console.log();
+      // Clean, organized menu with better visual hierarchy
+      const menuOptions = [
+        // Core Operations
+        { name: `${COLORS.success('🚀')} Start AI Tracking`, value: 'start', description: 'Launch proxy server for real-time monitoring' },
+        { name: `${COLORS.primary('📊')} View Analytics Dashboard`, value: 'stats', description: 'Comprehensive token usage & cost analysis' },
 
-      const coreOptions = [
-        {
-          name: `${COLORS.success('🚀 Start AI Tracking')} ${COLORS.muted('- Launch proxy server for real-time monitoring')}`,
-          value: 'start',
-          section: 'core'
-        },
-        {
-          name: `${COLORS.primary('📊 View Analytics Dashboard')} ${COLORS.muted('- Comprehensive token usage & cost analysis')}`,
-          value: 'stats',
-          section: 'core'
-        }
+        // Quality Control
+        { name: `${COLORS.highlight('🔍')} Code Quality Analysis`, value: 'analysis', description: 'Deep dive into AI-generated code quality' },
+        { name: `${COLORS.warning('🧠')} Hallucination Detection`, value: 'hallucinations', description: 'AI output validation and accuracy analysis' },
+        { name: `${COLORS.secondary('🔬')} Enhanced CodeHalu Analysis`, value: 'enhanced_detection', description: 'Advanced pattern-based hallucination detection' },
+
+        // Analytics & Data
+        { name: `${COLORS.primary('📈')} Provider Comparison`, value: 'providers', description: 'Compare AI provider performance and costs' },
+        { name: `${COLORS.secondary('🔍')} Browse Interactions`, value: 'browse', description: 'Explore your AI interaction history' },
+        { name: `${COLORS.highlight('📋')} Export Analytics`, value: 'export', description: 'Export data for external analysis' },
+
+        // System Management
+        { name: `${COLORS.warning('⚙️')} Initialize Configuration`, value: 'init', description: 'Set up TokNXR for first-time use' },
+        { name: `${COLORS.success('🏥')} System Doctor`, value: 'doctor', description: 'Diagnose and fix common issues' },
+        { name: `${COLORS.secondary('💰')} Budget Management`, value: 'budget', description: 'Configure spending limits and alerts' },
+        { name: `${COLORS.accent('💬')} Send Feedback`, value: 'feedback', description: 'Report bugs, suggest features, ask questions' },
+
+        // Exit option
+        { name: `${COLORS.muted('❌')} Exit`, value: 'exit', description: 'Close TokNXR CLI' }
       ];
-
-      console.log(MENU_SECTIONS.QUALITY_CONTROL.title);
-      console.log(MENU_SECTIONS.QUALITY_CONTROL.description);
-      console.log();
-
-      const qualityOptions = [
-        {
-          name: `${COLORS.highlight('🔍 Code Quality Analysis')} ${COLORS.muted('- Deep dive into AI-generated code quality')}`,
-          value: 'analysis',
-          section: 'quality'
-        },
-        {
-          name: `${COLORS.warning('🧠 Hallucination Detection')} ${COLORS.muted('- AI output validation and accuracy analysis')}`,
-          value: 'hallucinations',
-          section: 'quality'
-        },
-        {
-          name: `${COLORS.secondary('🔬 Enhanced CodeHalu Analysis')} ${COLORS.muted('- Advanced pattern-based hallucination detection')}`,
-          value: 'enhanced_detection',
-          section: 'quality'
-        }
-      ];
-
-      console.log(MENU_SECTIONS.ANALYTICS.title);
-      console.log(MENU_SECTIONS.ANALYTICS.description);
-      console.log();
-
-      const analyticsOptions = [
-        {
-          name: `${COLORS.primary('📈 Provider Comparison')} ${COLORS.muted('- Compare AI provider performance and costs')}`,
-          value: 'providers',
-          section: 'analytics'
-        },
-        {
-          name: `${COLORS.secondary('🔍 Browse Interactions')} ${COLORS.muted('- Explore your AI interaction history')}`,
-          value: 'browse',
-          section: 'analytics'
-        },
-        {
-          name: `${COLORS.highlight('📋 Export Analytics')} ${COLORS.muted('- Export data for external analysis')}`,
-          value: 'export',
-          section: 'analytics'
-        }
-      ];
-
-      console.log(MENU_SECTIONS.SYSTEM_MANAGEMENT.title);
-      console.log(MENU_SECTIONS.SYSTEM_MANAGEMENT.description);
-      console.log();
-
-      const systemOptions = [
-        {
-          name: `${COLORS.warning('⚙️ Initialize Configuration')} ${COLORS.muted('- Set up TokNXR for first-time use')}`,
-          value: 'init',
-          section: 'system'
-        },
-        {
-          name: `${COLORS.success('🏥 System Doctor')} ${COLORS.muted('- Diagnose and fix common issues')}`,
-          value: 'doctor',
-          section: 'system'
-        },
-        {
-          name: `${COLORS.secondary('💰 Budget Management')} ${COLORS.muted('- Configure spending limits and alerts')}`,
-          value: 'budget',
-          section: 'system'
-        },
-        {
-          name: `${COLORS.accent('💬 Send Feedback')} ${COLORS.muted('- Report bugs, suggest features, ask questions')}`,
-          value: 'feedback',
-          section: 'system'
-        }
-      ];
-
-      // Combine all options
-      const allOptions = [...coreOptions, ...qualityOptions, ...analyticsOptions, ...systemOptions];
-
-      // Add separator and exit option
-      allOptions.push({
-        name: chalk.gray('─'.repeat(50)),
-        value: 'separator',
-        section: 'other'
-      });
-      allOptions.push({
-        name: `${COLORS.muted('❌ Exit')} ${COLORS.muted('- Close TokNXR CLI')}`,
-        value: 'exit',
-        section: 'other'
-      });
 
       // Display random tip
       console.log(COLORS.accent('💡 Pro Tip: ') + COLORS.muted(getRandomTip()));
       console.log();
 
-      const choice = await createInteractiveMenu(allOptions.filter(opt => opt.value !== 'separator'));
+      const choice = await createInteractiveMenu(menuOptions);
 
       try {
         switch (choice) {
@@ -482,17 +394,17 @@ program
   .command('start')
   .description('Start the TokNxr proxy server to monitor AI interactions.')
   .action(async () => {
-    // Import branding for enhanced startup experience
-    const {
-      TOKNXR_COMPACT_LOGO,
-      createSuccessBox,
-      createErrorBox,
-      COLORS,
-      getContextualDecoration
-    } = await import('./branding.js');
+      // Import branding for enhanced startup experience
+      const {
+        TOKNXR_CUSTOM_LOGO,
+        createSuccessBox,
+        createErrorBox,
+        COLORS,
+        getContextualDecoration
+      } = await import('./branding.js');
 
     console.clear();
-    console.log(TOKNXR_COMPACT_LOGO);
+    console.log(TOKNXR_CUSTOM_LOGO);
     console.log(COLORS.muted(getContextualDecoration()));
     console.log();
 
@@ -1017,7 +929,7 @@ program
   .action(async () => {
     // Import branding for enhanced init experience
     const {
-      TOKNXR_COMPACT_LOGO,
+      TOKNXR_CUSTOM_LOGO,
       createSuccessBox,
       createErrorBox,
       COLORS,
@@ -1025,7 +937,7 @@ program
     } = await import('./branding.js');
 
     console.clear();
-    console.log(TOKNXR_COMPACT_LOGO);
+    console.log(TOKNXR_CUSTOM_LOGO);
     console.log(COLORS.accent('🎯 TokNXR Initialization Wizard'));
     console.log(COLORS.muted('Setting up your AI analytics environment...'));
     console.log();
@@ -2987,7 +2899,7 @@ program
   .action(async () => {
     // Import branding for enhanced doctor experience
     const {
-      TOKNXR_COMPACT_LOGO,
+      TOKNXR_CUSTOM_LOGO,
       createSuccessBox,
       createErrorBox,
       COLORS,
@@ -2995,7 +2907,7 @@ program
     } = await import('./branding.js');
 
     console.clear();
-    console.log(TOKNXR_COMPACT_LOGO);
+    console.log(TOKNXR_CUSTOM_LOGO);
     console.log(COLORS.accent('🏥 TokNXR System Doctor'));
     console.log(COLORS.muted('Diagnosing your AI analytics environment...'));
     console.log();
@@ -3289,4 +3201,3 @@ try {
 } catch (e) {
   // This will catch the exit override and prevent the process from exiting
 }
-
