@@ -25,27 +25,32 @@ export function useTrackerForm() {
     isSubmitting: false,
   });
 
-  const updateFormData = (field: keyof TrackerFormData, value: string | number | boolean) => {
-    setState(prev => ({
-      ...prev,
-      formData: {
-        ...prev.formData,
-        [field]: value,
-      },
-    }));
-  };
-
   const handleInputChange = (e: React.ChangeEvent<HTMLInputElement | HTMLSelectElement>) => {
     const { name, value, type } = e.target;
-    
-    if (type === 'checkbox') {
-      const { checked } = e.target as HTMLInputElement;
-      updateFormData(name as keyof TrackerFormData, checked);
-    } else if (type === 'number') {
-      updateFormData(name as keyof TrackerFormData, parseFloat(value) || 0);
-    } else {
-      updateFormData(name as keyof TrackerFormData, value);
-    }
+
+    setState(prev => {
+      const newFormData = { ...prev.formData };
+      let parsedValue: string | number | boolean;
+
+      if (type === 'checkbox') {
+        parsedValue = (e.target as HTMLInputElement).checked;
+      } else if (type === 'number') {
+        parsedValue = parseFloat(value) || 0;
+      } else {
+        parsedValue = value;
+      }
+
+      (newFormData as any)[name] = parsedValue;
+
+      if (name === 'promptTokens' || name === 'completionTokens') {
+        newFormData.totalTokens = newFormData.promptTokens + newFormData.completionTokens;
+      }
+
+      return {
+        ...prev,
+        formData: newFormData,
+      };
+    });
   };
 
   const submitForm = async () => {
@@ -83,10 +88,12 @@ export function useTrackerForm() {
         tokens_used: state.formData.totalTokens,
         cost_in_cents: Math.round(state.formData.costUSD * 100),
         request_details: `Task: ${state.formData.taskType}, Quality: ${state.formData.qualityRating}, Error: ${state.formData.errorDetected}, Hallucination: ${state.formData.hallucination}`,
-        response_details: `Prompt tokens: ${state.formData.promptTokens}, Completion tokens: ${state.formData.completionTokens}`
+        response_details: `Prompt tokens: ${state.formData.promptTokens}, Completion tokens: ${state.formData.completionTokens}`,
       };
 
-      const { data, error } = await supabase.functions.invoke('track-interaction', { body: interactionData });
+      const { data, error } = await supabase.functions.invoke('track-interaction', {
+        body: interactionData,
+      });
       if (error) throw error;
 
       setState(prev => ({
@@ -97,7 +104,8 @@ export function useTrackerForm() {
     } catch (err: unknown) {
       setState(prev => ({
         ...prev,
-        error: err instanceof Error ? err.message : 'An error occurred while tracking the interaction',
+        error:
+          err instanceof Error ? err.message : 'An error occurred while tracking the interaction',
         isSubmitting: false,
       }));
     }
@@ -117,6 +125,5 @@ export function useTrackerForm() {
     handleInputChange,
     submitForm,
     resetForm,
-    updateFormData,
   };
 }

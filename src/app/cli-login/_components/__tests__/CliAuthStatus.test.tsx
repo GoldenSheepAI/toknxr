@@ -67,7 +67,7 @@ describe('CliAuthStatus', () => {
     ).toBeInTheDocument();
 
     // Check for success styling
-    const successDiv = screen.getByText('Success!').closest('div');
+    const successDiv = screen.getByText('Success!').closest('div.bg-green-100');
     expect(successDiv).toHaveClass('bg-green-100', 'text-green-800');
 
     // Check for checkmark icon

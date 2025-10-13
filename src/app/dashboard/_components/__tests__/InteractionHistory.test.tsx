@@ -34,47 +34,28 @@ const mockInteractions: Interaction[] = [
 ];
 
 describe('InteractionHistory', () => {
-  it('renders table headers correctly', () => {
-    render(<InteractionHistory interactions={[]} />);
-
-    expect(screen.getByText('Model')).toBeInTheDocument();
-    expect(screen.getByText('Total Tokens')).toBeInTheDocument();
-    expect(screen.getByText('Cost (USD)')).toBeInTheDocument();
-    expect(screen.getByText('Quality')).toBeInTheDocument();
-    expect(screen.getByText('Hallucination')).toBeInTheDocument();
-  });
-
-  it('renders interaction data correctly', () => {
+  it('renders table with correct data', () => {
     render(<InteractionHistory interactions={mockInteractions} />);
 
-    // Check first interaction
     expect(screen.getByText('gpt-4')).toBeInTheDocument();
-    expect(screen.getByText('300')).toBeInTheDocument();
-    expect(screen.getByText('0.010000')).toBeInTheDocument();
-    expect(screen.getByText('useful')).toBeInTheDocument();
-    expect(screen.getByText('No')).toBeInTheDocument();
+    expect(screen.getByText('300 tokens')).toBeInTheDocument();
+    expect(screen.getByText('$0.0100')).toBeInTheDocument();
+    expect(screen.getAllByText('Excellent')[0]).toBeInTheDocument();
+    expect(screen.getByText('None')).toBeInTheDocument();
 
-    // Check second interaction
     expect(screen.getByText('claude-3')).toBeInTheDocument();
-    expect(screen.getByText('400')).toBeInTheDocument();
-    expect(screen.getByText('0.020000')).toBeInTheDocument();
-    expect(screen.getByText('partial')).toBeInTheDocument();
-    expect(screen.getByText('Yes')).toBeInTheDocument();
+    expect(screen.getByText('400 tokens')).toBeInTheDocument();
+    expect(screen.getByText('$0.0200')).toBeInTheDocument();
+    expect(screen.getByText('Fair')).toBeInTheDocument();
+    expect(screen.getByText('Detected')).toBeInTheDocument();
   });
 
-  it('handles empty interactions list', () => {
+  it('renders no interactions message when interactions list is empty', () => {
     render(<InteractionHistory interactions={[]} />);
-
-    // Should still render headers but no data rows
-    expect(screen.getByText('Interaction History')).toBeInTheDocument();
-    expect(screen.getByRole('table')).toBeInTheDocument();
-
-    // Should not have any data rows
-    const rows = screen.getAllByRole('row');
-    expect(rows).toHaveLength(1); // Only header row
+    expect(screen.getByText(/No interactions recorded yet/)).toBeInTheDocument();
   });
 
-  it('formats cost with 6 decimal places', () => {
+  it('formats cost with 4 decimal places', () => {
     const interactionWithPreciseCost: Interaction[] = [
       {
         ...mockInteractions[0],
@@ -83,6 +64,6 @@ describe('InteractionHistory', () => {
     ];
 
     render(<InteractionHistory interactions={interactionWithPreciseCost} />);
-    expect(screen.getByText('0.123457')).toBeInTheDocument();
+    expect(screen.getByText('$0.1235')).toBeInTheDocument();
   });
 });

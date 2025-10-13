@@ -33,8 +33,8 @@ describe('TrackerForm', () => {
     render(<TrackerForm {...mockProps} />);
 
     // Check select fields
-    expect(screen.getByDisplayValue('openai')).toBeInTheDocument();
-    expect(screen.getByDisplayValue('useful')).toBeInTheDocument();
+    expect(screen.getByRole('combobox', { name: /provider/i })).toHaveValue('openai');
+    expect(screen.getByRole('combobox', { name: /quality rating/i })).toHaveValue('useful');
 
     // Check text inputs
     expect(screen.getByDisplayValue('gpt-4')).toBeInTheDocument();
@@ -62,7 +62,9 @@ describe('TrackerForm', () => {
     expect(mockProps.onInputChange).toHaveBeenCalled();
 
     // Test select change
-    fireEvent.change(screen.getByDisplayValue('openai'), { target: { value: 'anthropic' } });
+    fireEvent.change(screen.getByRole('combobox', { name: /provider/i }), {
+      target: { value: 'anthropic' },
+    });
     expect(mockProps.onInputChange).toHaveBeenCalled();
 
     // Test checkbox change
@@ -105,8 +107,6 @@ describe('TrackerForm', () => {
 
   it('renders all provider options', () => {
     render(<TrackerForm {...mockProps} />);
-
-    const providerSelect = screen.getByDisplayValue('openai'); // eslint-disable-line @typescript-eslint/no-unused-vars
 
     // Check that all options are present
     expect(screen.getByRole('option', { name: 'OpenAI' })).toBeInTheDocument();

@@ -54,7 +54,7 @@ describe('StatsCards', () => {
     render(<StatsCards stats={zeroStats} interactions={mockInteractions} />);
 
     expect(screen.getByText('$0.0000')).toBeInTheDocument();
-    expect(screen.getByText('0.0%')).toBeInTheDocument();
+    expect(screen.getAllByText('0.0%').length).toBe(2);
   });
 
   it('formats decimal places correctly', () => {

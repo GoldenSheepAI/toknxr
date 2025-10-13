@@ -11,22 +11,23 @@ interface TrackerFormProps {
   onReset: () => void;
 }
 
-export function TrackerForm({ 
-  formData, 
-  isSubmitting, 
-  onInputChange, 
-  onSubmit, 
-  onReset 
+export function TrackerForm({
+  formData,
+  isSubmitting,
+  onInputChange,
+  onSubmit,
+  onReset,
 }: TrackerFormProps) {
   return (
     <form onSubmit={onSubmit} className="space-y-6">
       <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
         {/* Provider Selection */}
         <div>
-          <label className="block text-sm font-medium text-gray-700 mb-2">
+          <label htmlFor="provider" className="block text-sm font-medium text-gray-700 mb-2">
             Provider
           </label>
           <select
+            id="provider"
             name="provider"
             value={formData.provider}
             onChange={onInputChange}
@@ -41,9 +42,7 @@ export function TrackerForm({
 
         {/* Model */}
         <div>
-          <label className="block text-sm font-medium text-gray-700 mb-2">
-            Model
-          </label>
+          <label className="block text-sm font-medium text-gray-700 mb-2">Model</label>
           <input
             type="text"
             name="model"
@@ -55,9 +54,7 @@ export function TrackerForm({
 
         {/* Token Counts */}
         <div>
-          <label className="block text-sm font-medium text-gray-700 mb-2">
-            Prompt Tokens
-          </label>
+          <label className="block text-sm font-medium text-gray-700 mb-2">Prompt Tokens</label>
           <input
             type="number"
             name="promptTokens"
@@ -68,9 +65,7 @@ export function TrackerForm({
         </div>
 
         <div>
-          <label className="block text-sm font-medium text-gray-700 mb-2">
-            Completion Tokens
-          </label>
+          <label className="block text-sm font-medium text-gray-700 mb-2">Completion Tokens</label>
           <input
             type="number"
             name="completionTokens"
@@ -81,22 +76,19 @@ export function TrackerForm({
         </div>
 
         <div>
-          <label className="block text-sm font-medium text-gray-700 mb-2">
-            Total Tokens
-          </label>
+          <label className="block text-sm font-medium text-gray-700 mb-2">Total Tokens</label>
           <input
             type="number"
             name="totalTokens"
             value={formData.totalTokens}
             onChange={onInputChange}
-            className="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500"
+            readOnly
+            className="w-full px-3 py-2 border border-gray-300 rounded-md bg-gray-100 focus:outline-none focus:ring-2 focus:ring-blue-500"
           />
         </div>
 
         <div>
-          <label className="block text-sm font-medium text-gray-700 mb-2">
-            Cost (USD)
-          </label>
+          <label className="block text-sm font-medium text-gray-700 mb-2">Cost (USD)</label>
           <input
             type="number"
             step="0.0001"
@@ -109,9 +101,7 @@ export function TrackerForm({
 
         {/* Task Type */}
         <div>
-          <label className="block text-sm font-medium text-gray-700 mb-2">
-            Task Type
-          </label>
+          <label className="block text-sm font-medium text-gray-700 mb-2">Task Type</label>
           <input
             type="text"
             name="taskType"
@@ -123,10 +113,11 @@ export function TrackerForm({
 
         {/* Quality Rating */}
         <div>
-          <label className="block text-sm font-medium text-gray-700 mb-2">
+          <label htmlFor="qualityRating" className="block text-sm font-medium text-gray-700 mb-2">
             Quality Rating
           </label>
           <select
+            id="qualityRating"
             name="qualityRating"
             value={formData.qualityRating}
             onChange={onInputChange}
@@ -143,26 +134,28 @@ export function TrackerForm({
       <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
         <div className="flex items-center">
           <input
+            id="errorDetected"
             type="checkbox"
             name="errorDetected"
             checked={formData.errorDetected}
             onChange={onInputChange}
             className="h-4 w-4 text-blue-600 focus:ring-blue-500 border-gray-300 rounded"
           />
-          <label className="ml-2 block text-sm text-gray-700">
+          <label htmlFor="errorDetected" className="ml-2 block text-sm text-gray-700">
             Error Detected
           </label>
         </div>
 
         <div className="flex items-center">
           <input
+            id="hallucination"
             type="checkbox"
             name="hallucination"
             checked={formData.hallucination}
             onChange={onInputChange}
             className="h-4 w-4 text-blue-600 focus:ring-blue-500 border-gray-300 rounded"
           />
-          <label className="ml-2 block text-sm text-gray-700">
+          <label htmlFor="hallucination" className="ml-2 block text-sm text-gray-700">
             Hallucination
           </label>
         </div>
